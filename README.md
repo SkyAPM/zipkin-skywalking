@@ -3,6 +3,9 @@ Prepare to accept Zipkin tracr data at SkyWalking collector.
 
 The primary goal of Zipkin-SkyWalking bridge is mapping the spans, which collects by Zipkin SDKs and its ecosystem, to 
 SkyWalking Netwok protocols
+
+But be attention, right now, I think there is no way to let SkyWalking agent works with Zipkin SDKs in the same traced application cluster.
+
 * Zipkin v2: https://zipkin.io/zipkin-api/#/default/post_spans
 * SkyWalking 5.x: https://github.com/apache/incubator-skywalking/tree/master/apm-protocol/apm-network/src/main/proto En documents are still missing.
 
