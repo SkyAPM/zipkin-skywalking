@@ -67,7 +67,7 @@ Tags included in both Zipkin and SkyWalking. And for further analysis and aggreg
 ## Why need rebuild mechanism
 SkyWalking analysis traces by trace segment, not span. So the rebuild process is about to buffer the upload spans, rebuild them into severl segments, based on a trace segment rebuild timeout thredhold.
 
-- The reason of need **timeout threhold**: Noone can tell when where and how a trace end, even for a same service, it changes time to time, because codes upgrade, different parameter or status data. And also this is why SkyWalking use a complex HEAD/SegmentRef to allow analysis and aggregation program didn't expect a full trace to analysis. But This is impossible for rebuilding process.
+- The reason of need **timeout threhold**: No one can tell when, where and how a trace end, even for a same service, it changes time to time, because codes upgrade, different parameter or status data. And also this is why SkyWalking use a complex HEAD/SegmentRef to allow analysis and aggregation program didn't expect a full trace to analysis. But This is impossible for rebuilding process.
 
 ## Process flow
 ```
