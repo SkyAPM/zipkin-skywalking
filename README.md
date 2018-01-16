@@ -81,4 +81,7 @@ SkyWalking analysis traces by trace segment, not span. So the rebuild process is
                                                         +------------------------------------>  Analysis and Aggregation
 ```
 
+## Requirement
+An additional **Tag**, key is `app.code`. Every application under traced should be an explicit application code, in order to show in SkyWalking Topology, Application list etc.
+
 ## Rebuild steps
