@@ -61,6 +61,24 @@ Tags included in both Zipkin and SkyWalking. And for further analysis and aggreg
 |HTTP URL| **http.url** |
 |HTTP Status Code| **http.status_code** |
 |HTTP method| **http.method** |
-|MQ topic/queue name | |
+|MQ topic/queue name | No |
 
 # Trace and TraceSegment Rebuid mechanism
+## Why need rebuild mechanism
+SkyWalking analysis traces by trace segment, not span. So the rebuild process is about to buffer the upload spans, rebuild them into severl segments.
+
+## Process flow
+```
++-------------------------------+       +-------------------------------+                  +-------------------------------+
+| Application under Zipkin trace|       | Zipkin-SkyWalking Rebuilder   |                  |  SkyWalking Collector         |
++-------------------------------+       +-------------------------------+                  +-------------------------------+
+              |     /Spans (Zipkin v2)                  |                                                   |
+              +---------------------------->    1. Rebuild segment                                          |
+                                with same traceid and applicationCode(Requirement¹)                         |
+                                            2. Buffer unfinished segment                                    |
+                                                    into files                                              |
+                                                        |   SkyWalking gRPC services                        |
+                                                        +------------------------------------>  Analysis and Aggregation
+```
+
+## Rebuild steps
