@@ -46,7 +46,7 @@ Application listening address, includes IPv4, IPv6 and port. usually the link lo
 RemoteEndpoint represents the peer network address and service name for a RPC or MQ(broker). In SkyWalking, service name maps ExitSpan's operationName, and ip(v4/v6) + port maps ExitSpan's peer by combining these two as a String with `:`.
 
 ### Annotations
-Annotation can be considered as Log in SkyWalking, but no key. So convert it to log with the default log.key=`za` (Zipkin Annotation).
+Annotation can be considered as Log in SkyWalking, but no key. So convert it to log with the default log.key=`zipkin` (Zipkin Annotation).
 
 ### Tags
 Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation. Here is the mapping table based on [Zipkin core define](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift).
