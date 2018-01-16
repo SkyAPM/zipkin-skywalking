@@ -53,10 +53,14 @@ Tags included in both Zipkin and SkyWalking. And for further analysis and aggreg
 
 | Data required by SkyWalking | Possible Keys in Zipkin |
 |----|-----|
-|Error occurs in this Span scope.|  | 
-|Componenet library name. e.g. Feign, Resttemplate|  |
-|Layer of this Span. e.g. Database, RPCFramework, Http, MQ, Cache | Presume non, must be conjectured by Component library name.|
+|Error occurs in this Span scope.| **error** | 
+|Componenet library name. e.g. Feign, Resttemplate| **lc** |
+|Layer of this Span. e.g. Database, RPCFramework, Http, MQ, Cache | Presume non, must be conjectured by Component library name or other tags|
 |SQL statement| **sql.query** |
-
+|Database Type| |
+|HTTP URL| **http.url** |
+|HTTP Status Code| **http.status_code** |
+|HTTP method| **http.method** |
+|MQ topic/queue name | |
 
 # Trace and TraceSegment Rebuid mechanism
