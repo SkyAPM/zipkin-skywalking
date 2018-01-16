@@ -10,7 +10,18 @@ SkyWalking Netwok protocols
 * SkyWalking 5.x: https://github.com/apache/incubator-skywalking/tree/master/apm-protocol/apm-network/src/main/proto En documents are still missing.
 
 # Data Models Mapping
-## LocalEndpoint
+## Trace 
+A set of spans that share a single root span. TraceId maps the GlobalTraceId in SkyWalking.
+
+## Span
+In SkyWalking, Span is just a concept, not real. There are three sub-concept, and real classes are EntrySpan, LocalSpan and ExitSpan.
+
+LocalSpan and ExitSpan relate RPC and MQ, mapping Zipkin's Span with RemoteEndpoint.
+
+### Span's duration
+**duration** is in microseconds, and SkyWalking is in milliseconds. For notice, 1 millisecond is 1000 microseconds.
+
+### Span's LocalEndpoint
 Application listening address, includes IPv4, IPv6 and port. usually the link local IP
 
 **SkyWalking Mapping**: Server identify and InstanceDiscoveryService, including register, heartbeat. 
