@@ -14,7 +14,7 @@ SkyWalking Netwok protocols
 A set of spans that share a single root span. TraceId maps the GlobalTraceId in SkyWalking.
 
 ## TraceSegment
-No TraceSegment concept in Zipkin. Require [Trace and TraceSegment Rebuid mechanism](#Trace-and-TraceSegment-Rebuid-mechanism).
+No TraceSegment concept in Zipkin. Require [Trace and TraceSegment Rebuid mechanism](#trace-and-tracesegment-rebuid-mechanism).
 
 ## Span
 In SkyWalking, Span is just a concept, not real. There are three sub-concept, and real classes are EntrySpan, LocalSpan and ExitSpan.
@@ -29,7 +29,7 @@ minLength: 16
 pattern: [a-z0-9]{16,32}
 ```
 
-In SkyWalking, TraceId is a combination by three Integers. SpanId and ParentSpanId are small Integers, start with 0 in each TraceSegment.
+In SkyWalking, TraceId is a combination by three Integers. SpanId and ParentSpanId are small Integers, start with 0 in each TraceSegment. There two IDs need to be generated in [Trace and TraceSegment Rebuid](#trace-and-tracesegment-rebuid-mechanism) process.
 
 ### Span's timestamp
 Epoch microseconds of the start of this span. Equal to SkyWalking Span's startTime, but the Unit of SkyWalking is milliseconds.
@@ -44,5 +44,19 @@ Application listening address, includes IPv4, IPv6 and port. usually the link lo
 
 ### Span's RemoteEndpoint
 RemoteEndpoint represents the peer network address and service name for a RPC or MQ(broker). In SkyWalking, service name maps ExitSpan's operationName, and ip(v4/v6) + port maps ExitSpan's peer by combining these two as a String with `:`.
+
+### Annotations
+Annotation can be considered as Log in SkyWalking, but no key. So convert it to log with the default log.key=`za` (Zipkin Annotation).
+
+### Tags
+Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation.
+
+| Data required by SkyWalking | Possible Keys in Zipkin |
+|----|-----|
+|Error occurs in this Span scope.|  | 
+|Componenet library name. e.g. Feign, Resttemplate|  |
+|Layer of this Span. e.g. Database, RPCFramework, Http, MQ, Cache | Presume non, must be conjectured by Component library name.|
+|SQL statement| **sql.query** |
+
 
 # Trace and TraceSegment Rebuid mechanism
