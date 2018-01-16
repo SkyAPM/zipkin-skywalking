@@ -1,10 +1,8 @@
 # Zipkin-SkyWalking
-Prepare to accept Zipkin tracr data at SkyWalking collector. 
+This project makes SkyWalking's collector accept [Zipkin trace format](https://zipkin.io/zipkin-api/#/default/post_spans).
+This extends SkyWalking to the OpenZipkin ecosystem, by allowing existing applications to send data to SkyWalking. We accomplish this by mapping the spans to SkyWalking Network protocols
 
-The primary goal of Zipkin-SkyWalking bridge is mapping the spans, which collects by Zipkin SDKs and its ecosystem, to 
-SkyWalking Netwok protocols
-
-**But be attention, right now, I think there is no way to let SkyWalking agent works with Zipkin SDKs in the same traced application cluster, now. You only can choose one of them.** [W3C distributed-tracing specification](https://github.com/apache/incubator-skywalking) may help some day, still need further discussion.
+**Note: currently an trace can only include data from SkyWalking agents or Zipkin instrumentation, but not both.** [W3C distributed-tracing specification](https://github.com/apache/incubator-skywalking) may help some day, still need further discussion.
 
 * Zipkin v2: https://zipkin.io/zipkin-api/#/default/post_spans
 * SkyWalking 5.x: https://github.com/apache/incubator-skywalking/tree/master/apm-protocol/apm-network/src/main/proto En documents are still missing.
@@ -32,10 +30,10 @@ pattern: [a-z0-9]{16,32}
 In SkyWalking, TraceId is a combination by three Integers. SpanId and ParentSpanId are small Integers, start with 0 in each TraceSegment. There two IDs need to be generated in [Trace and TraceSegment Rebuid](#trace-and-tracesegment-rebuid-mechanism) process.
 
 ### Span's timestamp
-Epoch microseconds of the start of this span. Equal to SkyWalking Span's startTime, but the Unit of SkyWalking is milliseconds.
+Epoch microseconds of the start of this span. This equivalent to SkyWalking Span's startTime, but the Unit of SkyWalking is milliseconds.
 
 ### Span's duration
-**duration** is in microseconds. For notice, 1 millisecond is 1000 microseconds. SkyWalking has only endTime in milliseconds. Zipkin-Span timestamp + duration = SkyWalking-Span endTime.
+**duration** is in microseconds (1 millisecond is 1000 microseconds). SkyWalking has only endTime in milliseconds. So, Zipkin-Span timestamp + duration = SkyWalking-Span endTime.
 
 ### Span's LocalEndpoint
 Application listening address, includes IPv4, IPv6 and port. usually the link local IP.
@@ -49,7 +47,7 @@ RemoteEndpoint represents the peer network address and service name for a RPC or
 Annotation can be considered as Log in SkyWalking, but no key. So convert it to log with the default log.key=`zipkin` (Zipkin Annotation).
 
 ### Tags
-Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation. Here is the mapping table based on [Zipkin core define](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift).
+Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation. Here is the mapping table based on [Zipkin core define](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift). Zipkin tags can also include arbitrary data. Conventionally, tag keys longer than 255 characters are not indexed.
 
 | Data required by SkyWalking | Possible Keys in Zipkin |
 |----|-----|
@@ -65,9 +63,9 @@ Tags included in both Zipkin and SkyWalking. And for further analysis and aggreg
 
 # Trace and TraceSegment Rebuid mechanism
 ## Why need rebuild mechanism
-SkyWalking analysis traces by trace segment, not span. So the rebuild process is about to buffer the upload spans, rebuild them into severl segments, based on a trace segment rebuild timeout thredhold.
+SkyWalking analysis traces by trace segment, not span. So the rebuild process is about to buffer the upload spans, rebuild them into several segments, based on a trace segment rebuild timeout threshold.
 
-- The reason of need **timeout threhold**: No one can tell when, where and how a trace end, even for a same service, it changes time to time, because codes upgrade, different parameter or status data. And also this is why SkyWalking use a complex HEAD/SegmentRef to allow analysis and aggregation program didn't expect a full trace to analysis. But This is impossible for rebuilding process.
+- Rationale of **timeout threshold**: No one can tell when, where and how a trace end, even for a same service, it changes time to time, because codes upgrade, different parameter or status data. And also this is why SkyWalking use a complex HEAD/SegmentRef to allow analysis and aggregation program didn't expect a full trace to analysis. However, this is impossible for rebuilding process.
 
 ## Process flow
 ```
