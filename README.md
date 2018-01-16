@@ -49,7 +49,7 @@ RemoteEndpoint represents the peer network address and service name for a RPC or
 Annotation can be considered as Log in SkyWalking, but no key. So convert it to log with the default log.key=`za` (Zipkin Annotation).
 
 ### Tags
-Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation.
+Tags included in both Zipkin and SkyWalking. And for further analysis and aggregation. Here is the mapping table based on [Zipkin core define](https://github.com/openzipkin/zipkin-api/blob/master/thrift/zipkinCore.thrift).
 
 | Data required by SkyWalking | Possible Keys in Zipkin |
 |----|-----|
