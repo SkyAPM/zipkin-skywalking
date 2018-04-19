@@ -7,6 +7,9 @@ This extends SkyWalking to the OpenZipkin ecosystem, by allowing existing applic
 * Zipkin v2: https://zipkin.io/zipkin-api/#/default/post_spans
 * SkyWalking 5.x: [SkyWalking Trace Data Protocol](https://github.com/apache/incubator-skywalking/blob/master/docs/en/Trace-Data-Protocol.md)
 
+# Supported SkyWalking
+5.x
+
 # Data Models Mapping
 ## Trace 
 A set of spans that share a single root span. TraceId maps the GlobalTraceId in SkyWalking.
