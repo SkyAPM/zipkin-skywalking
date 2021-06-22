@@ -1,11 +1,11 @@
 # Zipkin-SkyWalking Exporter
 **Zipkin-SkyWalking Exporter** supports Apache SkyWalking's collector accept [Zipkin trace format](https://zipkin.io/zipkin-api/#/default/post_spans).
-This extends SkyWalking to the OpenZipkin ecosystem, by allowing existing applications to send data to SkyWalking. We accomplish this by mapping the spans to [SkyWalking Trace Data Protocol](https://github.com/apache/incubator-skywalking/blob/master/docs/en/Trace-Data-Protocol.md)
+This extends SkyWalking to the OpenZipkin ecosystem, by allowing existing applications to send data to SkyWalking. We accomplish this by mapping the spans to [SkyWalking Trace Data Protocol](https://github.com/apache/skywalking/blob/5.x/docs/en/Trace-Data-Protocol.md)
 
 **Note: currently an trace can only include data from SkyWalking agents or Zipkin instrumentation, but not both.** [W3C distributed-tracing specification](https://github.com/apache/incubator-skywalking) may help some day, still need further discussion.
 
 * Zipkin v2: https://zipkin.io/zipkin-api/#/default/post_spans
-* SkyWalking 5.x: [SkyWalking Trace Data Protocol](https://github.com/apache/incubator-skywalking/blob/master/docs/en/Trace-Data-Protocol.md)
+* SkyWalking 5.x: [SkyWalking Trace Data Protocol](https://github.com/apache/skywalking/blob/5.x/docs/en/Trace-Data-Protocol.md)
 
 # Supported SkyWalking
 5.x
